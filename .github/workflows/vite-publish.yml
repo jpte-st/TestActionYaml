@@ -14,7 +14,7 @@ on:
       token:
         description: 'The GitHub token to use for downloading the action, defaults to workflow token'
         required: true
-        default: ${{ github.token }}
+        default: ""
 
 jobs:
   build:
