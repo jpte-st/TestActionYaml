@@ -68,7 +68,7 @@ jobs:
           # GitHub Action output files
           source-directory: public/
           destination-github-username: jpjp84
-          destination-repository-name: https://github.com/jpjp84/Acon.git
+          destination-repository-name: Acon
           user-email: jpjp8414@gmail.com
           # It defaults to `main`
           target-branch: "main"
