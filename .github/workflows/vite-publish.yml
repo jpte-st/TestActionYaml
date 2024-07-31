@@ -1,9 +1,4 @@
 name: Yest FE build
-inputs:
-  token:
-    description: 'The GitHub token to use for downloading the action, defaults to workflow token'
-    required: true
-    default: ${{ github.token }}
 
 on:
   release:
@@ -15,6 +10,11 @@ on:
 
 ## 수동 실행
   workflow_dispatch:
+    inputs:
+      token:
+        description: 'The GitHub token to use for downloading the action, defaults to workflow token'
+        required: true
+        default: ${{ github.token }}
 
 jobs:
   build:
