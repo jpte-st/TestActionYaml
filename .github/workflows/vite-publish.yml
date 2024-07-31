@@ -67,6 +67,7 @@ jobs:
         with:
           # GitHub Action output files
           source-directory: dist/
+          target-directory: dist/
           destination-github-username: jpjp84
           destination-repository-name: Acon
           user-email: jpjp8414@gmail.com
