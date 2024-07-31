@@ -1,0 +1,73 @@
+name: Yest FE build
+
+on:
+  release:
+    types: [published]
+
+# Push 시 체크 필요 시
+#  push:
+#    branches: [ main ]
+
+## 수동 실행
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 💾 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Install dependencies
+        run: npm install
+
+      - name: 🏗️ Build
+        run: npm run build
+
+      - name: 📦 Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-without-markdown
+          path: |
+            dist
+            !dist/**/*.md
+
+# 백엔드 Repository에 배포
+      - name: 🚀 Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: git@github.com:jpjp84/Acon.git
+          BRANCH: main
+          FOLDER: dist
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+
+# 커버리지 파일 생성
+#      - name: Archive code coverage results
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: code-coverage-report
+#          path: output/test/code-coverage.html
+
+# Github Page 배포용(storybook)
+#      - name: 🚀Deploy to GitHub Pages🚀
+#        uses: JamesIves/github-pages-deploy-action@4.1.5
+#        with:
+#          branch: gh-pages
+#          folder: public
+
+# 백엔드 Repository에 배포
+#      - name: Deploy
+#        uses: s0/git-publish-subdir-action@develop
+#        env:
+#          REPO: self
+#          BRANCH: gh-pages
+#          FOLDER: public/site
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
