@@ -28,7 +28,7 @@ jobs:
       - name: Print Array ENV
         run: |
           echo "${{ env.secret_keys }}"
-          for key in ${env.secret_keys[@]}; do
+          for key in ${secret_keys[@]}; do
             echo "$key"
           done
 #
