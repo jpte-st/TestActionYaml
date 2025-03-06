@@ -1,5 +1,8 @@
 name: Yest FE build
 
+env:
+  secret_keys: ("ACR-PASSWORD" "DEV-MONGO-URI")
+
 on:
   release:
     types: [published]
@@ -21,63 +24,66 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
     steps:
-      - name: 🛎️ Checkout code
-        uses: actions/checkout@v4
-
-      - name: 💾 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: 📥 Install dependencies
-        run: npm install
-
-      - name: 🏗️ Build
-        run: npm run build
-
-      - name: 📦 Archive production artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-without-markdown
-          path: |
-            dist
-            !dist/**/*.md
-
-# 백엔드 Repository에 배포
-
-      - name: Deploy to external repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          # 🏗️ <internal repository>, run GitHub Action.
-          # 🎁 <external repository>, receiving Artifacts.
-          #
-          # Way 1: using Personal Access Token
-          # @see https://cpina.github.io/push-to-another-repository-docs/setup-using-personal-access-token.html#setup-personal-access-token
-          # 1.1 Generate Personal Access Token: <external repository>/<Avatar>/Settings/Developer settings/Personal access tokens/Generate new token
-          #     Select `No expiration` and Check `✅️ repo    Full control of private repositories`, Generate and then Copy the Token
-          # 1.2 Then make the token available to the GitHub Action: <internal repository>/Settings/Secrets/Actions/New repository secret
-          #     Name: EXTERNAL_REPOSITORY_PERSONAL_ACCESS_TOKEN, Value Paste the Token
-          API_TOKEN_GITHUB: ${{ inputs.token }}
-          # Way 2: using SSH deploy keys
-          # @see https://cpina.github.io/push-to-another-repository-docs/setup-using-ssh-deploy-keys.html#setup-ssh-deploy-keys
-          # 2.1 Generate an SSH key in terminal (Leave the passphrase empty)
-          # 2.2 Add public key in the external repository: <external repository>/Settings/Deploy keys/Add deploy key
-          #     Name: DEPLOY_PUBLIC_KEY, Value Paste the public key. Enable "✅️ Allow write access"
-          # 2.3 Add private key in the source repository: <external repository>/Settings/Secrets/Actions/New repository secret
-          #     Name: DEPLOY_PRIVATE_KEY, Value Paste the private key.
-          # SSH_DEPLOY_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-
-        with:
-          # GitHub Action output files
-          source-directory: dist/
-          target-directory: dist/
-          destination-github-username: jpjp84
-          destination-repository-name: Acon
-          user-email: jpjp8414@gmail.com
-          # It defaults to `main`
-          target-branch: "main"
+      - name: Print Array ENV
+        run: echo "${{ env.secret_keys }}
+#
+#    steps:
+#      - name: 🛎️ Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: 💾 Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '20'
+#
+#      - name: 📥 Install dependencies
+#        run: npm install
+#
+#      - name: 🏗️ Build
+#        run: npm run build
+#
+#      - name: 📦 Archive production artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dist-without-markdown
+#          path: |
+#            dist
+#            !dist/**/*.md
+#
+## 백엔드 Repository에 배포
+#
+#      - name: Deploy to external repository
+#        uses: cpina/github-action-push-to-another-repository@main
+#        env:
+#          # 🏗️ <internal repository>, run GitHub Action.
+#          # 🎁 <external repository>, receiving Artifacts.
+#          #
+#          # Way 1: using Personal Access Token
+#          # @see https://cpina.github.io/push-to-another-repository-docs/setup-using-personal-access-token.html#setup-personal-access-token
+#          # 1.1 Generate Personal Access Token: <external repository>/<Avatar>/Settings/Developer settings/Personal access tokens/Generate new token
+#          #     Select `No expiration` and Check `✅️ repo    Full control of private repositories`, Generate and then Copy the Token
+#          # 1.2 Then make the token available to the GitHub Action: <internal repository>/Settings/Secrets/Actions/New repository secret
+#          #     Name: EXTERNAL_REPOSITORY_PERSONAL_ACCESS_TOKEN, Value Paste the Token
+#          API_TOKEN_GITHUB: ${{ inputs.token }}
+#          # Way 2: using SSH deploy keys
+#          # @see https://cpina.github.io/push-to-another-repository-docs/setup-using-ssh-deploy-keys.html#setup-ssh-deploy-keys
+#          # 2.1 Generate an SSH key in terminal (Leave the passphrase empty)
+#          # 2.2 Add public key in the external repository: <external repository>/Settings/Deploy keys/Add deploy key
+#          #     Name: DEPLOY_PUBLIC_KEY, Value Paste the public key. Enable "✅️ Allow write access"
+#          # 2.3 Add private key in the source repository: <external repository>/Settings/Secrets/Actions/New repository secret
+#          #     Name: DEPLOY_PRIVATE_KEY, Value Paste the private key.
+#          # SSH_DEPLOY_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+#
+#        with:
+#          # GitHub Action output files
+#          source-directory: dist/
+#          target-directory: dist/
+#          destination-github-username: jpjp84
+#          destination-repository-name: Acon
+#          user-email: jpjp8414@gmail.com
+#          # It defaults to `main`
+#          target-branch: "main"
 #
 
 #
