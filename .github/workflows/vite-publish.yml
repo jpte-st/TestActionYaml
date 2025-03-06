@@ -1,7 +1,7 @@
 name: Yest FE build
 
 env:
-  secret_keys: ("ACR-PASSWORD" "DEV-MONGO-URI")
+  secret_keys: "ACR-PASSWORD DEV-MONGO-URI"
 
 on:
   release:
