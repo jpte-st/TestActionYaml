@@ -26,7 +26,7 @@ jobs:
       contents: read
     steps:
       - name: Print Array ENV
-        run: echo "${{ env.secret_keys }}
+        run: echo "${{ env.secret_keys }}"
 #
 #    steps:
 #      - name: 🛎️ Checkout code
