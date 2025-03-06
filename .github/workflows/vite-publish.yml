@@ -28,7 +28,7 @@ jobs:
 
       - name: Convert JSON keys to env variables
         run: |
-          json='{"server":"prod", "acr":"123123","version":"1.2.3","build":"456"}'
+          json='{"server":"prod","acr":"123123","version":"1.2.3","build":"456"}'
           echo "KEY SECRET => $json" 
           for key in $(echo $json | jq -r 'keys[]'); do
             value=$(echo $JSON_STRING | jq -r ".\"$key\"")
