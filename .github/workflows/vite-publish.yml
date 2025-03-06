@@ -32,7 +32,7 @@ jobs:
           echo "KEY SECRET => $json" 
           for key in $(echo $json | jq -r 'keys[]'); do
             value=$(echo $json | jq -r ".\"$key\"")
-            echo "$key=$value"
+            echo "$key=$value" >> $GITHUB_ENV
           done
 
       - name: Print Array ENV
