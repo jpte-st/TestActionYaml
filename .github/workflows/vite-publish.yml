@@ -25,6 +25,16 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Set JSON string
+        run: echo 'JSON_STRING={"server":"prod","version":"1.2.3","build":"456"}' >> $GITHUB_ENV
+
+      - name: Convert JSON keys to env variables
+        run: |
+          for key in $(echo $JSON_STRING | jq -r 'keys[]'); do
+            value=$(echo $JSON_STRING | jq -r ".\"$key\"")
+            echo "$key=$value"
+          done
+
       - name: Print Array ENV
         run: |
           echo "${{ env.secret_keys }}"
