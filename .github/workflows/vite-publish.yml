@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Set JSON string
         run: |
-          json='{"server":"prod", "acr": "123123","version":"1.2.3","build":"456"}'
+          json='{"server":"prod", "acr":"123123","version":"1.2.3","build":"456"}'
           echo 'JSON_STRING=$json' >> $GITHUB_ENV
 
       - name: Convert JSON keys to env variables
