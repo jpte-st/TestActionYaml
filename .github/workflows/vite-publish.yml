@@ -26,7 +26,11 @@ jobs:
       contents: read
     steps:
       - name: Print Array ENV
-        run: echo "${{ env.secret_keys }}"
+        run: |
+          echo "${{ env.secret_keys }}"
+          for key in ${env.secret_keys[@]}; do
+            echo "${{ key }}"
+          done
 #
 #    steps:
 #      - name: 🛎️ Checkout code
