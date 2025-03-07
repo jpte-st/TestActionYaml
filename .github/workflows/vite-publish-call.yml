@@ -18,7 +18,9 @@ on:
         required: true
         type: string
     outputs:
-      TEST_STRING: ${{ jobs.build.outputs.TEST2_STRING }}
+      TEST_STRING:
+        description: "Output Keyvault Secret"
+        value: ${{ intpus.TEST_STRING }}
 
 jobs:
   build:
