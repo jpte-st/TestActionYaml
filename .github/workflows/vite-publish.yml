@@ -61,11 +61,27 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      OUTPUT_TEST: ${{ needs.get-keyvault-secret.outputs.TEST_STRING }}
     steps:
       - name: TEST OUTPUT Bypassed Inputed
         run: |
           tess="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
           echo "$tess"
+
+  final:
+    needs: after
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: TEST OUTPUT Bypassed Inputed
+        run: |
+          tess1="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
+          echo "$tess1"
+          tess2="${{ needs.after.outputs.OUTPUT_TEST }}"
+          echo "$tess2"
+
 #
 #    steps:
 #      - name: 🛎️ Checkout code
