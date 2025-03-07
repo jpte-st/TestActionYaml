@@ -12,12 +12,10 @@ on:
 #    branches: [ main ]
 
 ## 수동 실행
-  workflow_dispatch:
-    inputs:
-      token:
-        description: 'The GitHub token to use for downloading the action, defaults to workflow token'
+  workflow_call:
+    secrets:
+      GITHUB_PAT:
         required: true
-        default: ""
 
 jobs:
   build:
@@ -25,34 +23,9 @@ jobs:
     permissions:
       contents: read
     steps:
-
-      - name: Convert JSON keys to env variables
-        run: |
-          json='"server":"prod";"acr":"123123";"version":"1.2.3";"build":"456"'
-          echo "KEY SECRET => $json" 
-          for key in $(echo $json | jq -r 'keys[]'); do
-            value=$(echo $json | jq -r ".\"$key\"")
-            echo "$key=$value" >> $GITHUB_ENV
-          done
-
       - name: Print Array ENV
         run: |
-          echo "${{ env.secret_keys }}"
-          secret_keys=(${{ env.secret_keys }})
-          for key in ${secret_keys[@]}; do
-            echo "$key"
-          done
-
-  get-keyvault-secret:
-    needs: build
-    uses: jpjp84/TestYml/.github/workflows/vite-publish-call.yml@main
-    secrets:
-      GITHUB_PAT: ${{ env.secret_keys }}
-    permissions:
-      id-token: write
-      contents: read
-      actions: read
-      security-events: write
+          echo "${{ secrets.GITHUB_PAT }}"
 #
 #    steps:
 #      - name: 🛎️ Checkout code
