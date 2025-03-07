@@ -70,7 +70,7 @@ jobs:
           echo "$tess"
 
   final:
-    needs: after
+    needs: [get-keyvault-secret, after]
     runs-on: ubuntu-latest
     permissions:
       contents: read
