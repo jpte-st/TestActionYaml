@@ -65,6 +65,7 @@ jobs:
       - name: TEST OUTPUT Bypassed Inputed
         run: |
           tess=${{ needs.get-keyvault-secret.outputs.TEST_STRING }}
+          echo "$tess"
 #
 #    steps:
 #      - name: 🛎️ Checkout code
