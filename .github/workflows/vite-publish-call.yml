@@ -25,8 +25,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      TEST2_STRING: ${{ steps.output_test.outputs.TEST2_STRING }}
     permissions:
       contents: read
     steps:
@@ -35,4 +33,3 @@ jobs:
         run: |
           echo "${{ inputs.TEST_STRING }}"
           test="${{ inputs.TEST_STRING }}"
-          echo "TEST2_STRING=$test" >> $GITHUB_OUTPUT
