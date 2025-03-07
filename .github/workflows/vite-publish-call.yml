@@ -13,6 +13,12 @@ on:
 
 ## 수동 실행
   workflow_call:
+    inputs:
+      TEST_STRING:
+        required: true
+        type: string
+    outputs:
+      TEST_STRING: ${{ inputs.TEST_STRING }}
     secrets:
       GITHUB_PAT:
         required: true
@@ -25,7 +31,9 @@ jobs:
     steps:
       - name: Print Array ENV
         run: |
-          echo "${{ secrets.GITHUB_PAT }}"
+          echo "${{ secrets.GITHUB_PAT }}, ${{ inputs.TEST_STRING }}"
+          
+
 #
 #    steps:
 #      - name: 🛎️ Checkout code
