@@ -57,6 +57,7 @@ jobs:
       security-events: write
 
   after:
+    if: ${{ needs.get-keyvault-secret.outputs.TEST_STRING != '' && needs.get-keyvault-secret.outputs.TEST_STRING != null }}
     needs: get-keyvault-secret
     runs-on: ubuntu-latest
     permissions:
