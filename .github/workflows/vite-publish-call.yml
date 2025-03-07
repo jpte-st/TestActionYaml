@@ -18,17 +18,22 @@ on:
         required: true
         type: string
     outputs:
-      TEST_STRING: ${{ inputs.TEST_STRING }}
+      TEST_STRING: ${{ jobs.build.outputs.TEST2_STRING }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      TEST2_STRING: ${{ steps.output_test.outputs.TEST2_STRING }}
     permissions:
       contents: read
     steps:
       - name: Print Array ENV
+        id: output_test
         run: |
           echo "${{ secrets.GITHUB_PAT }}, ${{ inputs.TEST_STRING }}"
+          test=${{ inputs.TEST_STRING }}
+          echo "TEST2_STRING=$test" >> $GITHUB_OUTPUT
           
 
 #
