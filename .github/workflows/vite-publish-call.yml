@@ -20,7 +20,7 @@ on:
     outputs:
       TEST_STRING:
         description: "Output Keyvault Secret"
-        value: ${{ intpus.TEST_STRING }}
+        value: ${{ jobs.build.outputs.TEST2_STRING }}
 
 jobs:
   build:
