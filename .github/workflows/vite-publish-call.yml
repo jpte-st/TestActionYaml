@@ -19,9 +19,6 @@ on:
         type: string
     outputs:
       TEST_STRING: ${{ inputs.TEST_STRING }}
-    secrets:
-      GITHUB_PAT:
-        required: true
 
 jobs:
   build:
