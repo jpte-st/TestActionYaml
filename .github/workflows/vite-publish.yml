@@ -47,7 +47,7 @@ jobs:
 
   get-keyvault-secret:
     needs: build
-    uses: jpjp84/TestYml/.github/workflows/vite-publish-call.yml@main
+    uses: jpjp84/git-ops/.github/workflows/vite-publish-call.yml@main
     with:
       TEST_STRING: "TEST STRING OK!"
     permissions:
