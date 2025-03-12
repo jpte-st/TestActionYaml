@@ -4,8 +4,6 @@ env:
   secret_keys: "ACR-PASSWORD DEV-MONGO-URI"
 
 on:
-  release:
-    types: [published]
 
 # Push 시 체크 필요 시
 #  push:
@@ -45,43 +43,43 @@ jobs:
 #            echo "$key"
 #          done
 
-  get-keyvault-secret:
-    needs: build
-    uses: jpjp84/git-ops/.github/workflows/vite-publish-call.yml@main
-    with:
-      TEST_STRING: "TEST STRING OK!"
-    permissions:
-      id-token: write
-      contents: read
-      actions: read
-      security-events: write
-
-  after:
-    if: ${{ needs.get-keyvault-secret.outputs.TEST_STRING != '' && needs.get-keyvault-secret.outputs.TEST_STRING != null }}
-    needs: get-keyvault-secret
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    outputs:
-      OUTPUT_TEST: ${{ needs.get-keyvault-secret.outputs.TEST_STRING }}
-    steps:
-      - name: TEST OUTPUT Bypassed Inputed
-        run: |
-          tess="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
-          echo "$tess"
-
-  final:
-    needs: [get-keyvault-secret, after]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: TEST OUTPUT Bypassed Inputed
-        run: |
-          tess1="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
-          echo "$tess1"
-          tess2="${{ needs.after.outputs.OUTPUT_TEST }}"
-          echo "$tess2"
+#  get-keyvault-secret:
+#    needs: build
+#    uses: jpjp84/git-ops/.github/workflows/vite-publish-call.yml@main
+#    with:
+#      TEST_STRING: "TEST STRING OK!"
+#    permissions:
+#      id-token: write
+#      contents: read
+#      actions: read
+#      security-events: write
+#
+#  after:
+#    if: ${{ needs.get-keyvault-secret.outputs.TEST_STRING != '' && needs.get-keyvault-secret.outputs.TEST_STRING != null }}
+#    needs: get-keyvault-secret
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#    outputs:
+#      OUTPUT_TEST: ${{ needs.get-keyvault-secret.outputs.TEST_STRING }}
+#    steps:
+#      - name: TEST OUTPUT Bypassed Inputed
+#        run: |
+#          tess="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
+#          echo "$tess"
+#
+#  final:
+#    needs: [get-keyvault-secret, after]
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#    steps:
+#      - name: TEST OUTPUT Bypassed Inputed
+#        run: |
+#          tess1="${{ needs.get-keyvault-secret.outputs.TEST_STRING }}"
+#          echo "$tess1"
+#          tess2="${{ needs.after.outputs.OUTPUT_TEST }}"
+#          echo "$tess2"
 
 #
 #    steps:
