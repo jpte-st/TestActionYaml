@@ -26,7 +26,7 @@ jobs:
       contents: read
     steps:
       - name: Test Step Notthing DO
-        run: echo "Test build job"
+        run: echo "Test build job ${{ secrets.GLOBAL_SECRET }}"
 
 #      - name: Convert JSON keys to env variables
 #        run: |
