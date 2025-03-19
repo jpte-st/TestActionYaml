@@ -31,9 +31,10 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           auth-type: "SERVICE_PRINCIPAL"
 
-      - name: Test Step Notthing DO
+      - name: 04. echo federation list
         run: |
           FEDERATION_NAME="fed-github-testactionyaml-all"
+          az identity federated-credential list --identity-name umi-test-kv-sso --resource-group rg_test_kv_sso -o json
           RESPONSE=$(az identity federated-credential list --identity-name umi-test-kv-sso --resource-group rg_test_kv_sso -o json)
           echo "$RESPONSE"
 
