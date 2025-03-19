@@ -4,12 +4,6 @@ env:
   secret_keys: "ACR-PASSWORD DEV-MONGO-URI"
 
 on:
-
-# Push 시 체크 필요 시
-#  push:
-#    branches: [ main ]
-
-## 수동 실행
   workflow_dispatch:
     inputs:
       token:
@@ -25,8 +19,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - name: 01. Checkout Repository at Specified Branch
         uses: actions/checkout@v3
